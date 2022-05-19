@@ -43,6 +43,7 @@ void Count(char* file)
 {
     FILE* fp;
     char a;
+    int breakp = 1;
     if ((fp = fopen(file, "r")) == NULL)
     {
         printf("读文件失败！\n");
@@ -53,12 +54,15 @@ void Count(char* file)
         a = fgetc(fp);
 
         Charcount++;
-        if (a == ' ' || a == ',')
+        if (a == ' ' || a == ','|| a=='\n' || a=='.')
         {
+            breakp=1;
+        }
+        if ((('a' <= a && a <= 'z') || ('A' <= a && a <= 'Z')) && (breakp == 1)) {
             Wordcount++;
+            breakp = 0;
         }
     }
     Charcount--;          //at end of the file,Charcount will add
-    Wordcount++;
     fclose(fp);
 }
